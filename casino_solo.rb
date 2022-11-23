@@ -4,21 +4,45 @@
       # 2. High/low.
 #3. Player places bet and wins/ loses (hint:rand).
 #4. Player's bankroll goes up and down with wins and losses.
-class Dice
+#5. wins and losses
+
+require_relative 'player'
+ 
+class Casino
   def initialize
-    roll
+    @player = Player.new
+    show_menu
   end
-  
-  def roll
-    @die1 = 1 + rand(6)
-    @die2 = 1 + rand(6) 
+
+  def show_menu
+    begin
+    puts "what do you want to do?"
+    puts "1. Slots"
+    puts "2. High/Low"
+    puts "3. Check wallet?"
+    puts "4. Exit"
+    responce = get.strip.to_i
+    raise "Bad Input" unless responce > 0 && responce < 5
+      case  responce
+      when 1
+        #todo: slots
+      when 2 
+        #high
+      when 3
+        puts "you have $#{player.money}"
+      when 4 
+        puts "have a nice day" 
+        exit
+      else 
+        raise
+      end 
+      show_menu
+    rescue StandardError => e
+      puts e
+      retry
+    end
   end
-  
-  def show_dice
-    print "Die1: ", @die1, " Die2:", @die2
-  end
-  
-  def show_sum
-    print "Sum of dice is ", @die1 + @die2, ".\n"
-  end 
- end
+end
+
+
+Casino.new
